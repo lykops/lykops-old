@@ -1,0 +1,54 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav" id="side-menu">
+			<li class="nav-header">
+			    <img alt="image"  src="/static/img/logo.jpg" />
+			</li>
+            <li id="basicdata">
+                <a href="#"><i class="fa fa-group"></i> <span class="nav-label">基础数据</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level">
+                    <li class="provider"><a href="{% url 'list_provider' %}">服务供应商</a></li>
+
+                    <li id="idc">
+                    <a href="#"><i class="fa fa-group"></i> <span class="nav-label">机房-网络</span><span class="fa arrow"></span></a>
+	                    <ul class="nav nav-third-level">
+		                    <li class="idc"><a href="{% url 'list_idc' %}">机房</a></li>
+		                    <li class="rack"><a href="{% url 'list_rack' %}">机柜</a></li>
+		                    <li class="bandwidth"><a href="{% url 'list_bandwidth' %}">带宽</a></li>
+		                    <li class="ip_segment"><a href="{% url 'list_ip_segment' %}">网段</a></li>
+	                    </ul>
+	                </li>
+                    
+                    <li id="service">
+                    <a href="#"><i class="fa fa-group"></i> <span class="nav-label">第三方服务</span><span class="fa arrow"></span></a>
+	                    <ul class="nav nav-third-level">
+		                    <li class="domain"><a href="{% url 'list_domain' %}">域名</a></li>
+                            <li class="wechat_pubno"><a href="{% url 'list_wechat_pubno' %}">微信公众号</a></li>
+		                    <li class="third_service"><a href="{% url 'list_third_service' %}">第三方服务</a></li>
+		                </ul>
+		            </li>
+
+                    <li id="ware">
+                    <a href="#"><i class="fa fa-group"></i> <span class="nav-label">硬软件</span><span class="fa arrow"></span></a>
+		                <ul class="nav nav-third-level">
+		                    <li class="hardware_brand"><a href="{% url 'list_hardware_brand' %}">硬件型号</a></li>
+		                    <li class="hardware"><a href="{% url 'list_hardware' %}">硬件</a></li>
+		                    <li class="software_type"><a href="{% url 'list_software_type' %}">软件类型</a></li>
+		                    <li class="software"><a href="{% url 'list_software' %}">软件</a></li>
+		                </ul>
+		          </li>
+
+                    <li id="self">
+                    <a href="#"><i class="fa fa-group"></i> <span class="nav-label">组织架构</span><span class="fa arrow"></span></a>
+		                <ul class="nav nav-third-level">
+		                    <li class="department"><a href="{% url 'list_department' %}">部门</a></li>
+		                    <li class="position"><a href="{% url 'list_position' %}">岗位</a></li>
+		                    <li class="person"><a href="{% url 'list_person' %}">员工</a></li>
+		                    <li class="business_system"><a href="{% url 'list_business_system' %}">业务系统</a></li>
+		               </ul>
+		           </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>

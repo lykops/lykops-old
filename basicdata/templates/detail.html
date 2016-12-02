@@ -1,0 +1,55 @@
+{% extends "base.html" %} 
+{% load bootstrap_toolkit %}
+{% load mytags %}
+
+{% block self_head_css_js %}
+{% endblock %}
+
+{% block content %}
+<div class="wrapper wrapper-content animated fadeInRight col-sm-6">
+    <h1 id="grp-admin-title">{{ title_name }}</h1>
+    
+    {% if error_message %}
+    <div class="alert alert-danger text-center">{{ error_message }}</div>
+    {% endif %}
+
+    {% if alter_message %}
+    <div class="alert alert-alter text-center">{{ alter_message }}</div>
+    {% endif %}
+
+    {% if success_message %}
+    <div class="alert alert-success text-center">{{ success_message }}</div>
+    {% endif %}
+
+    <table class="table table-striped table-bordered table-hover "  id="editable" >
+        {% for result in query_set %}
+        <tbody>
+            <tr>
+                <th>{{ result.0 }}</th>
+                {%  if result.1 == None %}
+                <td></td>
+                {% else %}
+                
+				{% autoescape off %}
+				    <td>{{ result.1|str_display  }}</td>
+				{% endautoescape %}
+
+                {% endif %}
+            </tr>
+        </tbody>
+    {% endfor %}
+    </table>
+
+    <div align="center">
+        <span class="step-links">
+            <a href="{{ http_referer }}"><button type="button" class="btn btn-sm btn-primary" >返回</button></a>
+            <a href="{{url_front}}/edit?id={{ id }}"><button type="button" class="btn btn-sm btn-warning" >编辑</button></a>
+            
+        </span>
+    </div>
+</div>
+{% endblock%}
+
+
+{% block self_footer_js %}
+{% endblock %}

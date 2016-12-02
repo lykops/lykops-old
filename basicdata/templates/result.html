@@ -1,0 +1,19 @@
+{% extends "base.html" %} 
+{% load bootstrap_toolkit %}
+
+    {% block self_head_css_js %}
+    {% endblock %}
+
+    <div class="alert alert-danger text-center"></div>
+    <div class="alert alert-alter text-center"></div>
+    <div class="alert alert-success text-center"></div>
+
+    {% block content %}
+                {% autoescape off %}
+                    {{ context }}
+                {% endautoescape %}
+    {% endblock%}
+
+
+    {% block self_footer_js %}
+    {% endblock %}

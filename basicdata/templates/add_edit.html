@@ -1,0 +1,41 @@
+{% extends "base.html" %} 
+{% load bootstrap_toolkit %}
+{% load mytags %}
+
+{% block self_head_css_js %}
+{% endblock %}
+
+{% block content %}
+<div class="wrapper wrapper-content animated fadeInRight">
+    <h1 id="grp-admin-title">{{title_name}}</h1>    
+
+    {% if error_message %}
+    <div class="alert alert-danger text-center">{{ error_message }}</div>
+    {% endif %}
+
+    {% if alter_message %}
+    <div class="alert alert-alter text-center">{{ alter_message }}</div>
+    {% endif %}
+
+    {% if success_message %}
+    <div class="alert alert-success text-center">{{ success_message }}</div>
+    {% endif %}
+
+    <form id="add_edit"  name="add_edit"  enctype="multipart/form-data" action=""  method="post"  class="form-horizontal">
+    {% csrf_token %}
+    {% for field in get_form %}
+        <div class="hr-line-dashed"></div>
+        <div class="form-group" >
+            <label class="col-sm-1 control-label">{{field.label_tag}}</label>
+		     <div class="col-sm-2">   {{ field }}</div>
+            {{field.errors}}
+        </div>
+        {% endfor %}  
+        
+        <button type="submit" class="btn btn-sm btn-primary">提交</button>
+    </form> 
+</div>
+{% endblock%}
+
+{% block self_footer_js %}
+{% endblock %}

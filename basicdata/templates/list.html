@@ -1,0 +1,165 @@
+{% extends "base.html" %} 
+{% load bootstrap_toolkit %}
+{% load bootstrap %}
+{% load mytags %}
+{% load staticfiles %}
+
+{% block self_head_css_js %}
+<!--         <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css" /> -->
+<!--         <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css" /> -->
+<!--         <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-theme.min.css" /> -->
+<!--         <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-theme.css" /> -->
+<!--         <link rel="stylesheet" type="text/css" href="/static/css/style.css" /> -->
+
+<!-- 		<link rel="stylesheet" type="text/css" href="/static/font-awesome/css/font-awesome.css" /> -->
+<!-- 		<link rel="stylesheet" type="text/css" href="/static/css/plugins/iCheck/custom.css" /> -->
+<!-- 		<link rel="stylesheet" type="text/css" href="/static/css/animate.css" /> -->
+<!-- 		<link rel="stylesheet" type="text/css" href="/static/css/style.css" /> -->
+<!-- 		<link rel="stylesheet" type="text/css" href="/static/css/colorbox.css" /> -->
+<!-- 		<link rel="stylesheet" type="text/css" href="/static/css/vaildator/jquery.validator.css" /> -->
+<!-- 		<link rel="stylesheet" type="text/css" href="/static/css/magnific/magnific-popup.css" /> -->
+<!-- 		<link rel="stylesheet" type="text/css" href="/static/css/plugins/fullcalendar/fullcalendar.css" /> -->
+<!-- 		<link rel="stylesheet" type="text/css" href="/static/css/plugins/dropzone/basic.css" /> -->
+<!-- 		<link rel="stylesheet" type="text/css" href="/static/css/plugins/dropzone/dropzone.css" /> -->
+
+<!--         <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" /> -->
+<!--         <link rel="stylesheet" type="text/css" href="/static/admin/css/dashboard.css" /> -->
+<!--         <link rel="stylesheet" type="text/css" href="/static/admin/css/fonts.css" /> -->
+<!--         <link rel="stylesheet" type="text/css" href="/static/admin/css/changelists.css" /> -->
+<!--         <link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css" /> -->
+<!--         <link rel="stylesheet" type="text/css" href="/static/admin/css/login.css" /> -->
+<!--         <link rel="stylesheet" type="text/css" href="/static/admin/css/widgets.css" /> -->
+{% endblock %}
+
+{% block content %}
+<div  class="wrapper wrapper-content animated fadeInRight">
+	<h1 id="grp-admin-title">{{title_name}}</h1>
+
+    {% if error_message %}
+    <div class="alert alert-danger text-center">{{ error_message }}</div>
+    {% endif %}
+
+    {% if alter_message %}
+    <div class="alert alert-alter text-center">{{ alter_message }}</div>
+    {% endif %}
+
+    {% if success_message %}
+    <div class="alert alert-success text-center">{{ success_message }}</div>
+    {% endif %}
+
+	<div>
+<!-- 	 class="animated fadeInRight"> -->
+	    <a href="{{ url_front }}/add"><button type="button" class="btn btn-sm btn-primary" >新增</button></a> 
+	    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    <a href="{{ url_front }}/export"><button id='export_btn' type="submit" class="btn btn-sm btn-primary">导出</button></a>
+	
+	    <form id="upload_import_file"  name="upload_import_file"  enctype="multipart/form-data" action="" method="post"  class="pull-right">
+	    {% csrf_token %}
+	        <label for="fileField">选择需要导入的文件：<input type="file" name="file"></label>
+	        <button id='upload_btn' type="submit" class="btn btn-sm btn-primary">上传</button>
+	    </form>
+    </div>
+    
+    <form id="search_form" method="get" action="" >
+    {% csrf_token %}
+        <div> 
+         {% if type_list  %}
+            <label for="type"> 类型</label>
+            <select name="type" id="type">
+            {% for type in type_list %}
+                <option value="{{type}}">{{type}}</option>
+            {% endfor %}
+            </select>
+           {% endif %}
+
+           {% if status_list  %}
+            <label for="status">使用状态</label>
+            <select name="status" id="status">
+             {% for status in status_list %}
+                <option value="{{status}}">{{status}}</option>
+            {% endfor %}
+            </select>
+            {% endif %}
+            
+            关键字<input id="search_input" name="keyword" placeholder="{{search_keyword}}" type="text" >
+            <button id='search_btn' type="submit" class="btn btn-sm btn-primary pull-center">搜索</button>
+        </div>
+    </form>
+    
+	<table class="table table-striped table-bordered table-hover" id="editable" >
+		<thead>
+			<tr>
+			{% for title in list_title_list %}
+			    {%  if list_title_list.0 != title %}
+                <th>{{title}}</th>
+                {% endif%}
+			{% endfor %}
+			</tr>
+		</thead>
+		  
+		<tbody>
+        {% for list in query_list %}
+			<tr class="active">
+			{% for value in list %}
+			    {%  if list.0 != value %}
+			    {%  if value == None %}
+                <td></td>
+                {% else %}
+                {% autoescape off %}
+                    <td>{{ value|str_display  }}</td>
+                {% endautoescape %}
+                {% endif %}
+                {% endif %}
+			{% endfor %}
+            <td>
+                <a href="{{url_front}}/detail?id={{ list.0 }}"><button type="button" class="btn btn-sm btn-primary" >查看详细</button></a> 
+                <a href="{{url_front}}/edit?id={{ list.0 }}"><button type="button" class="btn btn-sm btn-warning" >编辑</button></a>
+			</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	
+	<div  align="right">
+		<span class="step-links">
+			总计{{ query_list.paginator.num_pages }}页
+			</br>
+			
+			<a href="?page=1&perpage={{perpage}}&{{url_search}}">第一页</a>
+			{% if query_list.has_previous %}
+			<a href="?page={{ query_list.previous_page_number }}&perpage={{perpage}}&{{url_search}}">上一页</a>
+			{% endif %}
+			
+			{% for p_num in page_range %}
+			{% if 0 < p_num and p_num <= max_page %}
+			{% if query_list.number == p_num %}
+			<a href="#"> {{ query_list.number }}  <span class="sr-only">{{ query_list.number }}</span> </a>
+			{% else %}
+			<a href="?page={{ p_num }}&perpage={{perpage}}&{{url_search}}">{{ p_num }}</a>
+			{% endif %}
+			{% endif %}
+			{% endfor %}
+			
+			{% if query_list.has_next %}
+			<a href="?page={{ query_list.next_page_number }}&perpage={{perpage}}&{{url_search}}">下一页</a>
+			{% endif %}
+			<a href="?page={{ query_list.paginator.num_pages }}&perpage={{perpage}}&{{url_search}}">最后一页</a>
+			
+			</br>每页显示
+			<a href="{{url_front}}/list?page=1&perpage=5&{{url_search}}">5</a>
+			&nbsp;&nbsp;&nbsp;
+			<a href="{{url_front}}/list?page=1&perpage=10&{{url_search}}">10</a>
+			&nbsp;&nbsp;&nbsp;
+			<a href="{{url_front}}/list?page=1&perpage=20&{{url_search}}">20</a>
+			&nbsp;&nbsp;&nbsp;
+			<a href="{{url_front}}/list?page=1&perpage=50&{{url_search}}">50</a>
+			&nbsp;&nbsp;&nbsp;
+			<a href="{{url_front}}/list?page=1&perpage=100&{{url_search}}">100</a>
+			条信息
+		</span>
+	</div>
+</div>
+{% endblock%}
+
+{% block self_footer_js %}
+{% endblock %}
