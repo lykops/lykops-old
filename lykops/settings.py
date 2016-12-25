@@ -39,12 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'django_crontab',
-    'bootstrapform',
     'bootstrap_toolkit',
-    'bootstrap',
     
     'basicdata',
-    'pagination',
 ]
 
 MIDDLEWARE = [

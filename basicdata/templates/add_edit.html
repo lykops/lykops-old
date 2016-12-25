@@ -1,5 +1,4 @@
 {% extends "base.html" %} 
-{% load bootstrap_toolkit %}
 {% load mytags %}
 
 {% block self_head_css_js %}
@@ -8,18 +7,6 @@
 {% block content %}
 <div class="wrapper wrapper-content animated fadeInRight">
     <h1 id="grp-admin-title">{{title_name}}</h1>    
-
-    {% if error_message %}
-    <div class="alert alert-danger text-center">{{ error_message }}</div>
-    {% endif %}
-
-    {% if alter_message %}
-    <div class="alert alert-alter text-center">{{ alter_message }}</div>
-    {% endif %}
-
-    {% if success_message %}
-    <div class="alert alert-success text-center">{{ success_message }}</div>
-    {% endif %}
 
     <form id="add_edit"  name="add_edit"  enctype="multipart/form-data" action=""  method="post"  class="form-horizontal">
     {% csrf_token %}

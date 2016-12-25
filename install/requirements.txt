@@ -1,40 +1,12 @@
-ansible
-argparse
-bootstrap-admin
 django == 1.10
 django-bootstrap
 django-bootstrap-form
-django-bootstrap-pagination
 django-bootstrap-toolkit
 django-crontab
 django-pagination
-django-pagination-bootstrap
 djangorestframework
-django-smtp-ssl
-django-template-utils
-ecdsa
-fabric
-IPy
-jenkins 
+django-template-utils 
 mysqlclient
-openpyxl
-requests
-paramiko
-passlib
 Pillow
-psutil
-pycrypto
-pycurl
-pygments
-pyinotify
-pyte
-pyqrcode
-pypng
-qrcode
-tornado
-#excle2003 .xls
 xlrd
-#excle2007 .xlsx
-xlsxwriter
 xlwt
-

@@ -34,7 +34,7 @@ $(document).ready(function () {
     });
 
     // Append config box / Only for demo purpose
-    $.get("/skin_config/", function (data) {
+    $.get("/static/img/logo.jpg", function (data) {
         $('body').append(data);
     });
 
